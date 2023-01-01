@@ -6,6 +6,7 @@ export interface IZoeziMainGlobalContext {
     iszoeziDesktopApp: boolean
     isParentContext: boolean
     isManagedContext: boolean
+    lastname?: string // filled during signin
 }
 
 export interface IAction {

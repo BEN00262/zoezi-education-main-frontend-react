@@ -14,6 +14,11 @@ import PricingPage from './pages/unauthenticated/pricing';
 import SignUpPage from './pages/unauthenticated/signup';
 import PagesGlobalLayout from './components/shared/Layout';
 import { ForwardProtectedRoute, ProtectedRoute } from './components/shared/protected';
+import DashboardPage from './pages/authenticated/dashboard';
+import SubjectsPage from './pages/authenticated/dashboard/subpages/subjects';
+import SpecialPapersPage from './pages/authenticated/dashboard/subpages/special_papers/papers';
+import SpecialPaperCategoriesPage from './pages/authenticated/dashboard/subpages/special_papers/categories';
+import SpecialPaperSubjectsPage from './pages/authenticated/dashboard/subpages/special_papers/subjects';
 
 function App() {
   return (
@@ -37,6 +42,14 @@ function App() {
 
                 <Route element={<ProtectedRoute/>}>
                   {/* all routes that require auth */}
+                  <Route path="/dashboard" element={<DashboardPage/>}/>
+                  <Route path="/subjects/:grade_name/:grade_reference_id" element={<SubjectsPage/>}/>
+
+                  {/* special paper(s) navigation */}
+                  <Route path="/special/:grade_reference_id" element={<SpecialPapersPage/>}/>
+                  <Route path="/special/categories/:grade_name/:grade_reference_id" element={<SpecialPaperCategoriesPage/>}/>
+                  <Route path="/special/subjects/:grade_name/:category_name/:grade_reference_id" element={<SpecialPaperSubjectsPage/>}/>
+
                 </Route>
               </Routes>
             </CSSTransition>
