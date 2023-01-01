@@ -1,4 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useQuery } from "react-query"
+import { useDebounce } from 'use-debounce';
+
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+
+import { get_faqs } from "./api"
 
 interface IFAQContent {
     question: string
@@ -21,7 +29,7 @@ const FAQComp: React.FC<IFAQContent> = (faq_content) => {
                 </span>
             </h6>
             <blockquote>
-                <h6 hidden={is_hidden}>
+                <h6>
                     <span className="sub-modal-texts" style={{ textTransform: "capitalize" }}>  
                         {faq_content.answer}
                     </span>
@@ -48,9 +56,31 @@ const FAQCategoryComp: React.FC<IFAQItem> = (faq_category) => {
     )
 }
 
+const FAQCategorySkeletonComp = () => {
+    return (
+        <div className="col s12 m4" style={{ marginBottom:10 }}>
+            <h5>
+                <u className="sub-modal-texts" style={{
+                    textTransform: "capitalize",
+                }}> <Skeleton inline/> </u>
+            </h5>
+
+            <Skeleton height={15}/>
+            <Skeleton count={4}/>
+        </div>
+    )
+}
+
 
 const FAQPage = () => {
-    const [faq_categories, setFaqCategories] = useState<IFAQItem[]>([]);
+    // const [faq_categories, setFaqCategories] = useState<IFAQItem[]>([]);
+    const [searchText, setSearchText] = useState("");
+    const [faqSearch] = useDebounce(searchText, 1000);
+
+    const { data: faq_categories, isLoading } = useQuery<IFAQItem[]>(['faqs', faqSearch], () => get_faqs(faqSearch), {
+        staleTime: 1200000,
+    });
+    
 
     return (
         <div className="container">
@@ -67,7 +97,7 @@ const FAQPage = () => {
 
                         <div className="col s12 m8">
                             {/* <form method="post" className="z-depth-1" onsubmit="searchFAQ(event)"> */}
-                            <form method="post" className="z-depth-1">
+                            <form onSubmit={e => e.preventDefault()} className="z-depth-1">
                                 <div className="input-field col s12 m9">
                                     <input id="search" placeholder="Search for a question" className="white right-align" style={{
                                         border: "1px solid #dcdee2",
@@ -75,7 +105,7 @@ const FAQPage = () => {
                                         outline:0,boxSizing: "border-box",
                                         height:40,
                                         width: "100%",display: "flex",padding:10,textAlign: "start",
-                                    }} type="search" name="searchfaq" required/>
+                                    }} type="search" value={searchText} onChange={e => setSearchText(e.target.value)} required/>
                                 </div>
                                 <div className="input-field col s12 m3 center">
                                     <button className="left-align btn" style={{
@@ -101,9 +131,20 @@ const FAQPage = () => {
                     <div className="col s12">
                         <div>
                             {
-                                faq_categories.map((category, position) => 
-                                    <FAQCategoryComp key={`faq_category_${position}`} {...category}/>
-                                )
+                                isLoading ? 
+                                <>
+                                    {(new Array(5).fill(1)).map((x, position) => 
+                                        <FAQCategorySkeletonComp key={`faq_skeleton_${position}`}/>
+                                    )}
+                                </>
+                                :
+                                <>
+                                    {
+                                        faq_categories?.map((category, position) => 
+                                            <FAQCategoryComp key={`faq_category_${position}`} {...category}/>
+                                        )
+                                    }   
+                                </>
                             }
                         </div>
                     </div>

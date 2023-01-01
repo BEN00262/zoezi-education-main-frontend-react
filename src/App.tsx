@@ -3,7 +3,10 @@ import {
   Route,
   Routes
 } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 import { ZoeziMainContextComp, ZoeziMainQueryClient } from './context';
 import BlogPage from './pages/shared/blog';
@@ -20,8 +23,13 @@ import SpecialPapersPage from './pages/authenticated/dashboard/subpages/special_
 import SpecialPaperCategoriesPage from './pages/authenticated/dashboard/subpages/special_papers/categories';
 import SpecialPaperSubjectsPage from './pages/authenticated/dashboard/subpages/special_papers/subjects';
 import { QueryClientProvider } from 'react-query';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    AOS.init();
+  }, [])
+
   return (
     <BrowserRouter>
       <ZoeziMainContextComp>

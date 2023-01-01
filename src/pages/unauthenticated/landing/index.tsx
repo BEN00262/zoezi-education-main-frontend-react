@@ -9,6 +9,7 @@ import '@splidejs/react-splide/css';
 
 import Testimonialscomp from "./components/testimonials";
 import TwitterComp from "./components/twitter";
+import { Link } from "react-router-dom";
 
 export default function LandingPage () {
     useEffect(() => {
@@ -27,9 +28,9 @@ export default function LandingPage () {
                         }}>Keep Learning!</h2>
 
                         <div className="row center">
-                            <a href="/users/login" id="download-button" className="btn-large waves-effect waves-light z-depth-0 main-button">
-                            <b>Get Started</b>
-                            </a>
+                            <Link to="signin" id="download-button" className="btn-large waves-effect waves-light z-depth-0 main-button">
+                              <b>Get Started</b>
+                            </Link>
                         </div>
                         <br/>
                     </div>
