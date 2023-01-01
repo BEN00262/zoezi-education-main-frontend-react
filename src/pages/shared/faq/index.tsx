@@ -19,11 +19,9 @@ interface IFAQItem {
 }
 
 const FAQComp: React.FC<IFAQContent> = (faq_content) => {
-    const [is_hidden, setIsHidden ] = useState(true);
-    
     return (
         <div style={{ marginLeft:5 }}>
-            <h6 style={{ cursor: "pointer" }} onClick={_ => setIsHidden(old => !old)}>
+            <h6 style={{ cursor: "pointer" }}>
                 <span className="sub-modal-texts light-blue-text text-lighten-2" style={{ textTransform: "capitalize" }}>  
                     {faq_content.question}
                 </span>
