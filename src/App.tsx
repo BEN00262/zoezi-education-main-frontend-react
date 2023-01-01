@@ -13,6 +13,7 @@ import SignInPage from './pages/unauthenticated/signin';
 import PricingPage from './pages/unauthenticated/pricing';
 import SignUpPage from './pages/unauthenticated/signup';
 import PagesGlobalLayout from './components/shared/Layout';
+import { ForwardProtectedRoute, ProtectedRoute } from './components/shared/protected';
 
 function App() {
   return (
@@ -25,12 +26,18 @@ function App() {
               classNames="fade"
             >
               <Routes>
-                <Route path="/"  element={<LandingPage/>}/>
+                <Route element={<ForwardProtectedRoute/>}>
+                  <Route path="/"  element={<LandingPage/>}/>
+                </Route>
                 <Route path="/pricing" element={<PricingPage/>}/>
                 <Route path="/blog/:slug?" element={<BlogPage/>}/>
                 <Route path="/faq" element={<FAQPage/>}/>
                 <Route path="/signin" element={<SignInPage/>}/>
                 <Route path="/signup" element={<SignUpPage/>}/>
+
+                <Route element={<ProtectedRoute/>}>
+                  {/* all routes that require auth */}
+                </Route>
               </Routes>
             </CSSTransition>
           </TransitionGroup>

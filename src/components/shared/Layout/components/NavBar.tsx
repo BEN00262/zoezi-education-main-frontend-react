@@ -4,16 +4,15 @@ import { Link } from 'react-router-dom';
 import M from "materialize-css"
 
 import { useZoeziMainTrackedState } from "../../../../context"
+import { useIsLoggedIn } from "../../../../hooks";
 
 const NavBarComp = () => {
     const {
-        isManagedContext, isParentContext, authToken,
+        isManagedContext, isParentContext,
         isZoeziMobileApp
     } = useZoeziMainTrackedState();
 
-    const isLoggedIn = useMemo(() => {
-        return !!authToken;
-    }, [authToken]);
+    const isLoggedIn = useIsLoggedIn()
 
     useEffect(() => {
         M.Sidenav.init(document.querySelectorAll('.sidenav'));
