@@ -1,6 +1,7 @@
 import React from "react";
 import { FloatingWhatsApp } from 'react-floating-whatsapp'
 import { useZoeziMainTrackedState } from "../../../context";
+import { useIsLoggedIn } from "../../../hooks";
 
 
 import FooterComp from "./components/Footer";
@@ -8,7 +9,8 @@ import NavBarComp from "./components/NavBar";
 
 // used to manage shared stuff by some components
 const PagesGlobalLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>  {
-    const { isZoeziMobileApp } = useZoeziMainTrackedState()
+    const { isZoeziMobileApp } = useZoeziMainTrackedState();
+    const isLoggedIn = useIsLoggedIn()
 
     return (
         <>
@@ -18,7 +20,7 @@ const PagesGlobalLayout: React.FC<{ children: React.ReactNode }> = ({ children }
                 </main>
             <FooterComp/>
             {
-                isZoeziMobileApp ? null :
+                isZoeziMobileApp || isLoggedIn ? null :
                 <FloatingWhatsApp 
                     phoneNumber="254115815941" 
                     accountName="Zoezi Education"

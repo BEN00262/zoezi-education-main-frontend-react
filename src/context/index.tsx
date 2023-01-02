@@ -11,7 +11,7 @@ export const initialContext: IZoeziMainGlobalContext = {
     // authToken: "",
     isZoeziMobileApp: false,
     iszoeziDesktopApp: false,
-    isParentContext: false,
+    isParentContext: true,
     isManagedContext: false,
 
     ...verifyToken(localStorage.getItem("authToken") ?? "")
