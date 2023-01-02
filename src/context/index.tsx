@@ -24,7 +24,7 @@ export const {
 // create the query client for the whole app
 export const ZoeziMainQueryClient = new QueryClient();
 
-console.log(import.meta.env)
+// console.log(import.meta.env)
 
 axios.defaults.baseURL = import.meta.env.VITE_MAIN_ZOEZI_SERVER_ENDPOINT;
 
