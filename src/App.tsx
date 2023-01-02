@@ -24,6 +24,7 @@ import SpecialPaperCategoriesPage from './pages/authenticated/dashboard/subpages
 import SpecialPaperSubjectsPage from './pages/authenticated/dashboard/subpages/special_papers/subjects';
 import { QueryClientProvider } from 'react-query';
 import { useEffect } from 'react';
+import ErrorPage from './pages/shared/error';
 
 function App() {
   useEffect(() => {
@@ -61,6 +62,8 @@ function App() {
                     <Route path="/special/subjects/:grade_name/:category_name/:grade_reference_id" element={<SpecialPaperSubjectsPage/>}/>
 
                   </Route>
+
+                  <Route element={<ErrorPage code={404} message="Resource does not exist"/>} path="*" />
                 </Routes>
               </CSSTransition>
             </TransitionGroup>
