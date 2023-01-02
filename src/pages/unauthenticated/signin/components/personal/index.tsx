@@ -1,15 +1,18 @@
-const PersonalSignInComp = () => {
+const PersonalSignInComp: React.FC<{
+    handleSetCredentials:  (e: React.ChangeEvent<HTMLInputElement>) => void,
+    handleLogin: (e: React.SyntheticEvent) => void
+}> = ({ handleLogin, handleSetCredentials }) => {
     return (
         <div className="col s12 m6 push-m3" id="personal">
               {/* <%- include('partials/messages.ejs') %> */}
-            <form className="contactustext" action="/users/school-login" method="POST">
+            <form className="contactustext" onSubmit={handleLogin}>
                 <div className="row">
                     <div className="input-field col s12">
-                        <input id="personal_phoneNumber" type="text"  className="validate contactustext" name="mpesaNumber"/>
+                        <input id="personal_phoneNumber" type="text"  onChange={handleSetCredentials}  className="validate contactustext" name="username_or_phone_number"/>
                         <label htmlFor="personal_phoneNumber">Phone Number</label>
                     </div>
                     <div className="input-field col s12">
-                        <input id="personal_password" type="password" name="password" className="validate"/>
+                        <input id="personal_password" type="password" onChange={handleSetCredentials} name="password" className="validate"/>
                         <label htmlFor="personal_password">Login Password</label>
                     </div>
                 </div>
