@@ -1,16 +1,20 @@
 import axios from 'axios';
-import { useReducer } from 'react';
+import React, { useReducer } from 'react';
 import { QueryClient } from 'react-query';
 import { createContainer } from 'react-tracked';
+import { verifyToken } from '../utils';
+import { ACTION_TYPE_LOGIN } from './ActionTypes';
 import reducer from './reducer';
-import { IZoeziMainGlobalContext } from './types';
+import { IAction, IZoeziMainGlobalContext } from './types';
 
 export const initialContext: IZoeziMainGlobalContext = {
-    authToken: "",
+    // authToken: "",
     isZoeziMobileApp: false,
     iszoeziDesktopApp: false,
     isParentContext: false,
-    isManagedContext: false
+    isManagedContext: false,
+
+    ...verifyToken(localStorage.getItem("authToken") ?? "")
 }
 
 const useValue = () => useReducer(reducer, initialContext);
@@ -41,3 +45,16 @@ axios.interceptors.request.use(
 
     error => Promise.reject(error)
 )
+
+
+// dispatch methods
+export const handle_login_dispatch = (dispatch: React.Dispatch<IAction>, authToken: string) => {
+    localStorage.setItem('authToken', authToken);
+    
+    dispatch({
+        type: ACTION_TYPE_LOGIN,
+
+        // destructure the authtoken and then save the values
+        payload: verifyToken(authToken)
+    })
+}

@@ -2,13 +2,47 @@
 import M from "materialize-css"
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { handle_login_dispatch, useZoeziMainDispatch } from "../../../context";
 import { login } from "./api";
 
-import PersonalSignInComp from "./components/personal";
-import SchoolSignInComp from "./components/school";
-import { ICredentials } from "./types";
+import { ICredentials, ILoginResult } from "./types";
+
+const SignInFormComp: React.FC<{
+    handleSetCredentials:  (e: React.ChangeEvent<HTMLInputElement>) => void,
+    handleLogin: (e: React.SyntheticEvent) => void,
+    username_or_phone_number: string,
+    reference_id: string
+}> = ({ handleLogin, handleSetCredentials, username_or_phone_number, reference_id }) => {
+    return (
+        <div className="col s12 m6 push-m3" id={reference_id}>
+              {/* <%- include('partials/messages.ejs') %> */}
+            <form className="contactustext" onSubmit={handleLogin}>
+                <div className="row">
+                    <div className="input-field col s12">
+                        <input id="personal_phoneNumber" type="text"  onChange={handleSetCredentials}  className="validate contactustext" name="username_or_phone_number"/>
+                        <label htmlFor="personal_phoneNumber">{username_or_phone_number}</label>
+                    </div>
+                    <div className="input-field col s12">
+                        <input id="personal_password" type="password" onChange={handleSetCredentials} name="password" className="validate"/>
+                        <label htmlFor="personal_password">Login Password</label>
+                    </div>
+                </div>
+                <button className="waves-effect waves-light btn sub-names materialize-red" style={{
+                    width: "100%"
+                }} type="submit">
+                    <i className="material-icons">exit_to_app</i>
+                </button>
+                <p className="sub-modal-texts"><b>Don't have an account? <a href="/users/register">Register</a></b><br/><a href="/recovery">Forgot your Password?</a></p>
+            </form>
+        </div>
+    )
+}
 
 const SignInPage = () => {
+    const navigate = useNavigate();
+    const ZoeziMainDispatch = useZoeziMainDispatch();
+
     useEffect(() => {
         M.Tabs.init(document.querySelector(".tabs"), {})
     }, []);
@@ -26,7 +60,20 @@ const SignInPage = () => {
     }
 
     const login_mutation = useMutation((credentials: ICredentials) => login(credentials), {
+        onSuccess(data: ILoginResult, variables, context) {
+            // set the login data :)
+            handle_login_dispatch(
+                ZoeziMainDispatch, data.authToken
+            );
 
+            navigate('/dashboard', {
+                replace: true
+            })
+        },
+
+        onError(error: Error, variables, context) {
+            console.log(error);
+        },
     });
 
     const handleLogin = (e: React.SyntheticEvent) => {
@@ -57,10 +104,20 @@ const SignInPage = () => {
 
                     <div className="row">
                         {/* personal */}
-                        <PersonalSignInComp handleSetCredentials={handleSetCredentials} handleLogin={handleLogin}/>
+                        <SignInFormComp 
+                            handleSetCredentials={handleSetCredentials} 
+                            handleLogin={handleLogin} 
+                            username_or_phone_number="Phone Number"
+                            reference_id="personal"
+                        />
 
                         {/* school */}
-                        <SchoolSignInComp handleSetCredentials={handleSetCredentials} handleLogin={handleLogin}/>
+                        <SignInFormComp 
+                            handleSetCredentials={handleSetCredentials} 
+                            handleLogin={handleLogin} 
+                            username_or_phone_number="Username ( Assigned by school )"
+                            reference_id="school"
+                        />
                     </div>
                 </div>
             </div>

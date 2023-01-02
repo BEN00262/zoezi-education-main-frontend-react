@@ -15,6 +15,6 @@ export const verifyToken = (token: string) => {
         }
     } catch (error) {
 
-        return {authToken: null, isTeacher: false, communicationId: null };
+        return {authToken: null };
     }
 }

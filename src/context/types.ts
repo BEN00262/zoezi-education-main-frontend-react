@@ -1,7 +1,7 @@
 export type ActionType = string;
 
 export interface IZoeziMainGlobalContext {
-    authToken?: string
+    authToken: string | null
     isZoeziMobileApp: boolean
     iszoeziDesktopApp: boolean
     isParentContext: boolean

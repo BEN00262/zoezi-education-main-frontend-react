@@ -1,10 +1,13 @@
 import { useZoeziMainTrackedState } from "../../../../context";
+import { useIsLoggedIn } from "../../../../hooks";
 import ContactUsComp from "./ContactUs";
 
 const FooterComp = () => {
     const {
         isZoeziMobileApp, iszoeziDesktopApp
-    } = useZoeziMainTrackedState()
+    } = useZoeziMainTrackedState();
+
+    const isLoggedIn = useIsLoggedIn()
 
     return (
         <>
@@ -14,13 +17,14 @@ const FooterComp = () => {
                     :
                 <footer className="page-footer white">
                     <div className="footer-copyright">
-                        {/* <% if (!login) { %>
-                            <%- include('contactus') %>
-                            <div className="divider"></div>
-                        <% } %> */}
                         <div className="container">
-                            <ContactUsComp/>
-                            <div className="divider"></div>
+                            {
+                                !isLoggedIn ?
+                                <>
+                                    <ContactUsComp/>
+                                    <div className="divider"></div>
+                                </> : null
+                            }
                             <div className="row center black-text">
                                 <p className="text-lighten-2">
                                     <small>

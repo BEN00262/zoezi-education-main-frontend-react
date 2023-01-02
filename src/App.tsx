@@ -44,12 +44,12 @@ function App() {
                 <Routes>
                   <Route element={<ForwardProtectedRoute/>}>
                     <Route path="/"  element={<LandingPage/>}/>
+                    <Route path="/pricing" element={<PricingPage/>}/>
+                    <Route path="/blog/:slug?" element={<BlogPage/>}/>
+                    <Route path="/faq" element={<FAQPage/>}/>
+                    <Route path="/signin" element={<SignInPage/>}/>
+                    <Route path="/signup" element={<SignUpPage/>}/>
                   </Route>
-                  <Route path="/pricing" element={<PricingPage/>}/>
-                  <Route path="/blog/:slug?" element={<BlogPage/>}/>
-                  <Route path="/faq" element={<FAQPage/>}/>
-                  <Route path="/signin" element={<SignInPage/>}/>
-                  <Route path="/signup" element={<SignUpPage/>}/>
 
                   <Route element={<ProtectedRoute/>}>
                     {/* all routes that require auth */}
