@@ -28,6 +28,7 @@
     "react-router-dom": "^6.6.1",
     "react-tracked": "^1.7.10",
     "react-transition-group": "^4.4.5",
+    "react-twitter-embed": "^4.0.4",
     "use-debounce": "^9.0.2"
   },
   "devDependencies": {

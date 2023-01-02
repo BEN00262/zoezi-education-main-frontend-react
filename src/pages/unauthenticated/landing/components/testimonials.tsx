@@ -73,14 +73,14 @@ const Testimonialscomp = () => {
         }
     });
 
-    console.log(slider)
+    // FIXME: fix the refresh after is loading state change
 
     useEffect(() => {
         slider.mount()
-    }, [slider])
+    }, [])
 
     return (
-        <div className="container">
+        <div >
             <div className="row">
                 <div className="col s12 center">
                     <h3><i className="mdi-content-send brown-text"></i></h3>
@@ -95,7 +95,7 @@ const Testimonialscomp = () => {
                                 <>
                                     {
                                         (new Array(5).fill(1)).map((_, position) => {
-                                            return <TestimonialSkeletonComp key={`testimonial_skeleton_${position}`}/>
+                                            return <TestimonialSkeletonComp key={`testimony_${position}`}/>
                                         })
                                     }
                                 </>
