@@ -26,17 +26,19 @@ interface IDashboardSpecialPaper extends IDashboardBaseContent {
 
 const DashboardSampleGrade = () => {
     return (
-        <div className="card hoverable z-depth-1" style={{ cursor: "pointer" }}  /*onclick="getSampleQuestions()"*/>
-            <div className="card-image">
-                <img className="img-box-responsive" src="img/sample.png"/>
-            </div>
-            <div className="row center card-content">
-                <div className="center">
-                    <button className="waves-effect waves-light btn materialize-red z-depth-0" style={{
-                        borderRadius:20,paddingLeft:30,paddingRight:30,
-                    }}>
-                        <small><b>Try Sample</b></small>
-                    </button>
+        <div className="col s6 m3 l2">
+            <div className="card hoverable z-depth-1" style={{ cursor: "pointer" }}  /*onclick="getSampleQuestions()"*/>
+                <div className="card-image">
+                    <img className="img-box-responsive" src="img/sample.png"/>
+                </div>
+                <div className="row center card-content">
+                    <div className="center">
+                        <button className="waves-effect waves-light btn materialize-red z-depth-0" style={{
+                            borderRadius:20,paddingLeft:30,paddingRight:30,
+                        }}>
+                            <small><b>Try Sample</b></small>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
