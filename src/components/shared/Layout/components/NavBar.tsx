@@ -13,7 +13,7 @@ const NavBarComp = () => {
     } = useZoeziMainTrackedState();
 
     const isLoggedIn = useIsLoggedIn();
-    
+
     const isParentContext = useMemo(() => {
         return !student_reference;
     }, [student_reference]);
@@ -67,9 +67,9 @@ const NavBarComp = () => {
                         {
                             isLoggedIn ?
                             <ul className="right hide-on-med-and-down">
-                                    <li><a href="/dashboard">Dashboard</a></li>
-                                    <li><a href="/library">Library</a></li>
-                                    <li className="disabled"><a href="/reports">Reports</a></li>
+                                    <li><Link to="/dashboard">Dashboard</Link></li>
+                                    <li><Link to="/library">Library</Link></li>
+                                    <li className="disabled"><Link to="/reports">Reports</Link></li>
                                     <li><Link to="/blog">Media</Link></li>
                                     <li><Link to="/faq">Faq</Link></li>
                                     <li><a className="dropdown-trigger" id="desktopprofile2" href="#!" data-target="dropdown1">My Account<i className="material-icons right">arrow_drop_down</i></a></li>
@@ -122,9 +122,9 @@ const NavBarComp = () => {
                                 </>
                             :
                                 <>
-                                    <li><a href="/dashboard"><i className="material-icons prefix">home</i>Dashboard</a></li>
-                                    <li><a href="/library"><i className="material-icons prefix">business_center</i>Library</a></li>
-                                    <li><a href="/reports"><i className="material-icons prefix">insert_chart</i>Reports</a></li>
+                                    <li><Link to="/dashboard"><i className="material-icons prefix">home</i>Dashboard</Link></li>
+                                    <li><Link to="/library"><i className="material-icons prefix">business_center</i>Library</Link></li>
+                                    <li><Link to="/reports"><i className="material-icons prefix">insert_chart</i>Reports</Link></li>
                                     <li><a href="/media"><i className="material-icons prefix">web</i>Media</a></li>
 
                                     {
@@ -189,17 +189,17 @@ const NavBarComp = () => {
                         </a></li>
         
                         <li>
-                        <a href="/library" className="zoezi-link-clickable">
+                        <Link to="/library" className="zoezi-link-clickable">
                             <div>
                                 <span className="zoezi-bottom-nav-icon">
                                     <i className={`"material-icons <%= currentPage.includes("/library") ? "teal-text accent-4" : ""%></i>" style="height: 20px;"`}>business_center</i>
                                 </span>
                                 <span className="zoezi-bottom-nav-title">Library</span>
                             </div>
-                        </a></li>
+                        </Link></li>
         
                         <li className="grey-text">
-                        <a href="/reports" className="zoezi-link-clickable">
+                        <Link to="/reports" className="zoezi-link-clickable">
                             <div>
                                 <span className="zoezi-bottom-nav-icon">
                                     <i className={`"material-icons <%= currentPage.includes("/reports") ? "teal-text accent-4" : ""%>" style="height: 20px;"`}>insert_chart</i>
@@ -208,7 +208,7 @@ const NavBarComp = () => {
                             </div>
         
                             
-                        </a></li>
+                        </Link></li>
         
                         <li>
                         <a href="<%=isNotParentMode ? '/student-edit-profile' : '/editprofile'%>" className="zoezi-link-clickable">
