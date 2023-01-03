@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -15,9 +15,15 @@ const SubjectComp: React.FC<{
     subject: ISpecialSubject, grade_name: string, 
     second_tier?: string, category_name: string 
 }> = ({ subject: {subject, _id}, grade_name, category_name, second_tier }) => {
+    const navigate = useNavigate();
+
     return (
         <div className="col s6 m3 l2">
-            <div className="card hoverable z-depth-1" style={{ cursor: "pointer" }} /*onclick="location.href='/special/paper/<%=gradeName%>/<%=secondTier%>/<%=category%>/<%=subjects[r]._id%>';"*/>
+            <div className="card hoverable z-depth-1" 
+                style={{ cursor: "pointer" }} 
+                /*onclick="location.href='/special/paper/<%=gradeName%>/<%=secondTier%>/<%=category%>/<%=subjects[r]._id%>';"*/
+                onClick={_ => navigate(`/paper-cover/${grade_name}/${category_name}/${_id}`)}
+            >
                 <div className="card-image">
                     <img className="img-box-responsive" src={`/img/${grade_name}_special/${subject.toLowerCase().split(" ")[0]}.png`}/>
                 </div>
