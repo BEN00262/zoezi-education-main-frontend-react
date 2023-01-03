@@ -4,8 +4,8 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 
-import { switch_to_selected_student, useZoeziMainDispatch, useZoeziMainTrackedState } from "../../../context";
-import { get_children_within_account } from "./api";
+import { handle_login_dispatch, useZoeziMainDispatch, useZoeziMainTrackedState } from "../../../context";
+import { get_children_within_account, switch_to_selected_student_context } from "./api";
 import { IChild } from "./types";
 
 const ChildComp: React.FC<{ child: IChild }> = ({ child }) => {
@@ -13,24 +13,30 @@ const ChildComp: React.FC<{ child: IChild }> = ({ child }) => {
     const zoeziMainDispatch = useZoeziMainDispatch();
 
     // choose the learner and then redirect to the previously clicked link
-    const redirect_to_previously_clicked_link = (student_reference: string, selected_student_lname: string) => {
+    const redirect_to_previously_clicked_link = (student_reference: string) => {
         // make the request to the server
-        switch_to_selected_student(
-            zoeziMainDispatch,
-            {
-                student_reference,
-                selected_student_lname
-            }
-        );
+        switch_to_selected_student_context(student_reference)
+            .then((authToken: string | null) => {
+                // reset the authToken
 
-        // question is what if we dont have anything on the navigation stack ?
-        navigate(-1);
+                if (authToken) {
+                    // only if we have a token
+                    handle_login_dispatch(
+                        zoeziMainDispatch,
+                        authToken
+                    )
+                }
+        
+                // TODO: respect the previous link clicked by the user
+                // question is what if we dont have anything on the navigation stack ?
+                navigate(/* -1 */"/dashboard");
+            })
     }
 
     return (
         <div className="col s12 m4">
             <div 
-                onClick={_ => redirect_to_previously_clicked_link(child._id, child.lastname)}
+                onClick={_ => redirect_to_previously_clicked_link(child._id)}
                 // onclick="window.location.href='/who-is-learning/<%=child._id.toString()%>/?destination=<%=original_url%>'"
                 className="hoverable z-depth-1" 
                 style={{

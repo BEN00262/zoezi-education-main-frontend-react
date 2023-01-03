@@ -14,8 +14,8 @@ export const initialContext: IZoeziMainGlobalContext = {
     isParentContext: true,
     isManagedContext: false,
 
-    student_reference: localStorage.getItem("selected_student_reference") ?? null,
-    selected_student_lname: localStorage.getItem("selected_student_lname") ?? "",
+    // student_reference: localStorage.getItem("selected_student_reference") ?? null,
+    // selected_student_lname: localStorage.getItem("selected_student_lname") ?? "",
     ...verifyToken(localStorage.getItem("authToken") ?? "")
 }
 
