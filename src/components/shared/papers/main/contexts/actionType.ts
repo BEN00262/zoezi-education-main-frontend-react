@@ -1,4 +1,5 @@
-export type ActionType = string 
+import { ActionType } from "../../../../../context/types"
+
 
 export const UPDATE_QUESTIONS: ActionType = "UPDATE_QUESTIONS"
 export const UPDATE_SUBJECT_NAME: ActionType = "UPDATE_SUBJECT_NAME"

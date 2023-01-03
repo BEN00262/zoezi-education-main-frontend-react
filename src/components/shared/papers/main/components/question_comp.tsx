@@ -22,7 +22,7 @@ const useCreateShareableLink = (endpoint: string) => {
     const [isGeneratingLink, setIsGeneratingLink] = useState(false);
 
     const generateLink = (paperID: string, paperHistoryID: string) => {
-        const _csrf = document.getElementById("_csrf")?.innerText || "";
+        // const _csrf = document.getElementById("_csrf")?.innerText || "";
 
         // reset the error each time we make a request
         setIsGeneratingLink(true);
@@ -32,7 +32,7 @@ const useCreateShareableLink = (endpoint: string) => {
             // get the data we want to send ( paperID and the paper hashID )
             paperID,
             paperHistoryID,
-            _csrf
+            // _csrf
         })
         .then(({ data }) => {
             // we return two things : the status and the link to redirect to :)

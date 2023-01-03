@@ -1,5 +1,6 @@
-import { createContext, Dispatch, useReducer } from "react";
+import { Dispatch, useReducer } from "react";
 import { createContainer } from "react-tracked";
+import { IAction } from "../../../../../context/types";
 import { IPaperMap } from "../grouper/grouper";
 import { ILibraryPaperContent, IPagePaperStudentTree } from "../interfaces/librarypaper";
 import { IQuestion } from "../rendering_engine/DataLoaderInterface";
@@ -12,7 +13,7 @@ import {
     UPDATE_QUESTIONS, UPDATE_SUBJECT_NAME, 
     UPDATE_TIME_REMAINING, UPDATE_TOTAL_MARKS 
 } from "./actionType";
-import reducer, { IAction } from "./reducer";
+import reducer from "./reducer";
 
 // reset each time a paper is loaded into the system
 // if we have a comprehension question the fetch should be different
@@ -187,7 +188,8 @@ export const setDoingMode = (dispatch: Dispatch<IAction>,status: boolean) => {
 // this just changes it to true
 export const setIsMarked = (dispatch: Dispatch<IAction>) => {
     dispatch({
-        type: UPDATE_ISMARKED
+        type: UPDATE_ISMARKED,
+        payload: null
     })
 }
 
