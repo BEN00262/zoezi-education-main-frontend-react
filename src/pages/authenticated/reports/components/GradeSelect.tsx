@@ -141,7 +141,7 @@ const GradeSelectComp = () => {
             axios.get(`/analytics/special_paper_stats/${selectedGradeName._id || selectedGradeName.value}`)
                 .then(({ data }) => {
                     setPaperType(
-                        data.map(({ subType, _id }: { subType: string, _id: string }) => ({
+                        data?.stats?.map(({ subType, _id }: { subType: string, _id: string }) => ({
                             value: subType, _id, label: `${subType}s`
                         }))
                     )
@@ -181,7 +181,7 @@ const GradeSelectComp = () => {
             axios.get(`/analytics/special_paper_stats/${selectedGradeName._id || selectedGradeName.value}/${selectedPaperType._id}`)
                 .then(({ data }) => {
                     setPaperSubType(
-                        data.map(({ subsubType, _id }: { subsubType: string, _id: string }) => ({
+                        data?.stats?.map(({ subsubType, _id }: { subsubType: string, _id: string }) => ({
                             value: subsubType, label: subsubType, _id
                         }))
                     )
