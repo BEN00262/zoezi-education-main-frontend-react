@@ -1,7 +1,7 @@
 import React,{useState, useEffect,Suspense, useMemo} from 'react';
 import { Container } from 'react-materialize';
 
-import '../App.css';
+// import '../App.css';
 import { IQuestion } from '../rendering_engine/DataLoaderInterface';
 import { updateNoQuesPerPage, useZoeziPaperDispatch, useZoeziPaperTrackedState } from '../contexts/global';
 import { get_already_done_pages_questions_total } from '../grouper/grouper';

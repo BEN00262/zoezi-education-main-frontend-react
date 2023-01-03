@@ -68,9 +68,10 @@ class DataLoader implements DataLoaderInterface {
         if ( tableElementLength <= num ) { await this._fetchFromInternet(num); }
     }
     
+    // refactor this bit
     private async _fetchFromInternet(num: number){
         try {
-            let dataFetched = await this.httpClient.get(`${this.baseURL}/${num}`).then(({data}) => data);
+            let dataFetched = await this.httpClient.get(`${this.baseURL}/${num}`).then(({data}) => data?.sample_questions);
             this.dixieInstance.questions.bulkPut(dataFetched);
         }catch(error){
             console.error(error);

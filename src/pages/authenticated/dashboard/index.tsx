@@ -25,9 +25,15 @@ interface IDashboardSpecialPaper extends IDashboardBaseContent {
 }
 
 const DashboardSampleGrade = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="col s6 m3 l2">
-            <div className="card hoverable z-depth-1" style={{ cursor: "pointer" }}  /*onclick="getSampleQuestions()"*/>
+            <div 
+                className="card hoverable z-depth-1" 
+                style={{ cursor: "pointer" }} 
+                onClick={_ => navigate('/sample-paper')}
+            >
                 <div className="card-image">
                     <img className="img-box-responsive" src="img/sample.png"/>
                 </div>

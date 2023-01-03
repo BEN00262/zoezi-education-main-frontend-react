@@ -32,25 +32,25 @@ const Button: React.FC<IButtonProps> = ({ icon, btnText, onClick, isDisabled, co
 }
 
 // // <!-- :gradeName/:category/:paperID -->
-const gradeName = document.getElementById("gradeName")?.innerText || ""
-const category = document.getElementById("category")?.innerText || ""
-const paperID = document.getElementById("paperID")?.innerText || ""
-const studyBuddyReference = document.getElementById("studyBuddyReference")?.innerText || "";
+// const gradeName = document.getElementById("gradeName")?.innerText || "";
+// const category = document.getElementById("category")?.innerText || "";
+// const paperID = document.getElementById("paperID")?.innerText || "";
 
-// const gradeName = "KCPE"
-// // const category = "Model Paper 1"
-// const paperID = "617fd63a7e8aa50016c61c04" // "6169b489406ace0016b82268"; // "61a06214c01bb6001670f0bd"
+// const studyBuddyReference = document.getElementById("studyBuddyReference")?.innerText || "";
 
-
-const BASE_URL = `/special/paper_questions/${gradeName}/${category}/${paperID}`
-// const BASE_URL = `http://localhost:3600/special-paper/${paperID}`//616d77939b93740016005943"//6169b489406ace0016b82268" //616d77939b93740016005943"
+// const BASE_URL = `/special/paper_questions/${gradeName}/${category}/${paperID}`
 
 // we should pass the id though to the question
-const paperFetch = new PaperFetch(new HttpClientAxios(), BASE_URL)
+// const paperFetch = new PaperFetch(new HttpClientAxios(), BASE_URL)
 
 interface IPaperFace {
     setIsFrontPage: (state: boolean) => void
     setWasTimed: (state: boolean) => void
+
+    gradeName: string
+    paperID: string
+    studyBuddyReference?: string
+    BASE_URL: string
 }
 
 // we take the page map and the actual question array
@@ -96,7 +96,7 @@ const initialize_pages_structures = (paperMap: IPaperMap, questions: IQuestion[]
 }
 
 // this is the first thing seen after the paper has been fetched from the db
-const PaperFace: React.FC<IPaperFace> = ({ setIsFrontPage, setWasTimed }) => {
+const PaperFace: React.FC<IPaperFace> = ({ setIsFrontPage, setWasTimed, BASE_URL, gradeName, paperID, studyBuddyReference }) => {
     const { subject } = useZoeziPaperTrackedState();
     const dispatch = useZoeziPaperDispatch();
 
@@ -111,6 +111,9 @@ const PaperFace: React.FC<IPaperFace> = ({ setIsFrontPage, setWasTimed }) => {
     });
 
     const isKiswahili =  useMemo(() => subject.split(" ")[0].toLowerCase() === "kiswahili", [subject]);
+    const paperFetch = useMemo(() => {
+        return new PaperFetch(new HttpClientAxios(), BASE_URL)
+    }, [BASE_URL])
 
 
     useEffect(() => {
@@ -144,7 +147,7 @@ const PaperFace: React.FC<IPaperFace> = ({ setIsFrontPage, setWasTimed }) => {
                     paperMap: _paperMap,
                     gradeName,
                     paperID,
-                    studyBuddyReference: prevState.studyBuddyReference || studyBuddyReference,
+                    studyBuddyReference: prevState.studyBuddyReference || studyBuddyReference || "",
                     isLibraryPaper: false,
                     paperHistoryID: prevState._id || "",
                     currentPage: prevState.currentPage || 0,

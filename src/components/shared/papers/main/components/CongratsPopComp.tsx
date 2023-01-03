@@ -2,8 +2,6 @@ import { useContext, useMemo } from 'react';
 import Popup from 'reactjs-popup';
 import { switchCongratsOff, useZoeziPaperDispatch, useZoeziPaperTrackedState } from '../contexts/global';
 
-import Badge from "../images/badge.png"
-
 interface IStatistic {
     value: number
     text: string
@@ -43,7 +41,7 @@ const CongratsPopComp = () => {
             }}>
                 <div className="card-content center">
                     <img 
-                        src={Badge} alt="congrats badge" 
+                        src="/img/badge.png" alt="congrats badge" 
                         height="200px"    
                     />
                     <div style={{

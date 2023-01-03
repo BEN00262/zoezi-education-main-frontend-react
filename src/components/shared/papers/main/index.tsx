@@ -8,9 +8,17 @@ import StateWatcherComp from "./components/state_watcher"
 import {GlobalContextComp} from "./contexts/global"
 
 
-const MainPaperComp: React.FC<{
-    isLibraryReferenced: boolean
-}> = ({ isLibraryReferenced }) => {
+interface IMainPaper {
+    gradeName: string
+    category: string
+    paperID: string
+    studyBuddyReference: string
+    cover: boolean
+}
+
+const MainPaperComp: React.FC<IMainPaper> = ({ 
+    gradeName, category, paperID, studyBuddyReference, cover
+ }) => {
     localStorage.setItem("remainingTime", '0');
 
     const [isFrontPage, setIsFrontPage] = useState<boolean>(true);
@@ -21,7 +29,14 @@ const MainPaperComp: React.FC<{
             <GlobalErrorBoundaryComp>
                 <CongratsPopComp/>
                 <>
-                    {isLibraryReferenced ? <HeadlessComp/> :  isFrontPage ? <PaperFace setIsFrontPage={setIsFrontPage} setWasTimed={setWasTimed}/> : <QuestionHOC wasTimed={wasTimed}/>}
+                    {isFrontPage ? <PaperFace 
+                        setIsFrontPage={setIsFrontPage} 
+                        setWasTimed={setWasTimed}
+                        gradeName={gradeName}
+                        BASE_URL={`/special/paper_questions/${gradeName}/${category}/${paperID}`}
+                        paperID={paperID}
+                        studyBuddyReference={studyBuddyReference}
+                    /> : <QuestionHOC wasTimed={wasTimed}/>}
                 </>
                 <StateWatcherComp/>
             </GlobalErrorBoundaryComp>

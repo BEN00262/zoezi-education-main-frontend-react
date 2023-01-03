@@ -12,29 +12,13 @@ import OldVersionQuestion from './old_version_question';
 import { IQuestion } from '../rendering_engine/DataLoaderInterface';
 import { useAlert } from 'react-alert';
 
-// for sample papers we dont collect info about the user
-
-// async function collectUserInfo(
-//     _csrf: string, gradeName: string, subjectName: string, 
-//     subjectID: string, ups: number, downs: number, total: number
-// ) {
-//     await axios.post("/collect_info", {
-//         subjectName,
-//         gradeName,
-//         subjectID,
-//         ups,
-//         downs,
-//         totalQuestionsAttempted: total,
-//         _csrf
-//     })
-// }
-
 const QuestionComp = ({ questions, fetchQuestions }:{
     questions:IQuestion[],
     fetchQuestions: () => void
 }) => {
     const alert = useAlert();
-    const [isMarked, setIsMarked] = useState<boolean>(false);
+
+    const [isMarked, setIsMarked] = useState<boolean>(false); // we need to find a way to persist this
     const [numberAttempted, setNumberAttempted] = useState(0);
     const [correctAnswersCount, setCorrectAnswersCount] = useState<number>(0);
 
@@ -42,37 +26,13 @@ const QuestionComp = ({ questions, fetchQuestions }:{
         questions[0].questionType ? questions[0].questionType === "comprehension" ? 
         questions[0].children?.length : questions.length : questions.length;
 
-    // const gradeName = document.getElementById("gradeName")?.innerText;
-    // const subjectName = document.getElementById("subjectName")?.innerText;
-    // const subjectID = document.getElementById("subjectID")?.innerText;
-    // const _csrf = document.getElementById("_csrf")?.innerText;
-
     const submitStatisticsThenFetchQuestions = () => {
-        fetchQuestions()
-        // should post the data --> why is it not doing so
+        fetchQuestions();
 
-        // reenable when doing the actual zoezi paper here
-
-        // collectUserInfo(
-        //     _csrf || "",
-        //     gradeName || "",
-        //     subjectName || "",
-        //     subjectID || "",
-        //     correctAnswersCount,
-        //     numberAttempted - correctAnswersCount,
-        //     number_of_questions || 0
-        // );
-
-        // take a capture of the paper --> and then fetchQuestions :)
-        // @ts-ignore
-        // domtoimage.toPng(window.document.getElementById("zoeziPaper")).then(canvas => {
-        //     console.log(canvas)
-            
-        //     var img = new Image();
-        //     img.src = canvas;
-        //     document.body.appendChild(img);
-        // })
-        // .finally(() => {fetchQuestions() }) // request the system for more questions on the paper
+        // reset everything ( executed in batch )
+        setIsMarked(false);
+        setNumberAttempted(0);
+        setCorrectAnswersCount(0);
     }
 
     const isTabletOrMobileDevice = useMediaQuery({
@@ -119,10 +79,6 @@ const QuestionComp = ({ questions, fetchQuestions }:{
         }
     }
 
-    // reenable on the actual zoezi paper
-    // const isKiswahili = subjectName?.split(" ")[0].toLowerCase() === "kiswahili";
-
-
     return (
         <>
             <div className="white" style={{
@@ -144,7 +100,6 @@ const QuestionComp = ({ questions, fetchQuestions }:{
                     }}>
                         <b>
                             <span>
-                                {/* {isKiswahili ? "ALAMA":"SCORE"} replace with on the actual zoezi paper */}
                                 SCORE : {`${correctAnswersCount}/${number_of_questions}`}
                             </span>
                         </b>
@@ -174,13 +129,12 @@ const QuestionComp = ({ questions, fetchQuestions }:{
                     </div>
 
                     <div hidden={!isMarked}>
+                        {/* reset the marked button to not marked i think */}
                         <button onClick={submitStatisticsThenFetchQuestions} className="waves-effect waves-light z-depth-1 btn-small">{
-                            // isKiswahili ? "MASWALI ZAIDI" : "MORE QUESTIONS"
                             "MORE QUESTIONS"
                         }</button>
                     </div>
             </div>
-            {/* "https://zoezi-mitzanimedia.com/question/five/img/background2.webp" */}
             <div id="zoeziPaper">
             <Card
                 style={{
@@ -196,37 +150,30 @@ const QuestionComp = ({ questions, fetchQuestions }:{
                                 objectFit:"cover",
                             }} src="/img/background2.webp"/>
                         </div>
-                        <span className="card-title text-center sub-names truncate text-bold teal">{
-                            // `${subjectName}`
-                            "Sample Questions"
-                        }</span>
+                        <span className="card-title text-center sub-names truncate text-bold teal">
+                            Sample Question
+                        </span>
                     </div>
                 }
             >
                 <form onSubmit={(e) => {
-                    e.preventDefault();
-                    if (numberAttempted !== number_of_questions){
-                        // enable on the actual zoezi paper
-                        // alert.info(isKiswahili ? "Tafadhali jibu maswali yote" : "complete all the questions");
-                        alert.info("complete all the questions");
-                        return;
-                    }
-                    setIsMarked(true);
-                }
-                }>
+                        e.preventDefault();
+                        if (numberAttempted !== number_of_questions){
+                            alert.info("complete all the questions");
+                            return;
+                        }
+                        setIsMarked(true);
+                    }}
+                >
                     { questions.map((question: IQuestion,index: number) => selectQuestionType(question,index)) }
 
                     <Button
                         node="button"
                         waves="light"
                         small
-                        style={{
-                            marginTop:"15px"
-                        }}
-
+                        style={{  marginTop:"15px" }}
                         disabled={isMarked}
                     >
-                        {/* { isKiswahili ? "TUMA MAJIBU" : "SUBMIT ANSWERS" } */}
                         SUBMIT ANSWERS
                     </Button>
                 </form>
