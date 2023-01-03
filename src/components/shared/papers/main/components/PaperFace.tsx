@@ -233,10 +233,6 @@ const PaperFace: React.FC<IPaperFace> = ({ setIsFrontPage, setWasTimed, BASE_URL
                         marginBottom: "45px",
                         fontFamily: "'Abril Fatface', cursive",
                     }}>
-                        {/* style={{
-                        fontFamily: "'Abril Fatface', cursive",
-                        color: "red"
-                    }} */}
                         <h2 style={{
                             letterSpacing: "20px"
                         }}>{gradeName?.toUpperCase()}</h2>

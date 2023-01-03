@@ -8,13 +8,15 @@ const MainPaperPage: React.FC<{ frontPage: boolean }> = ({ frontPage }) => {
 
     return (
         <div className="container">
-            <MainPaperComp
-                category={category ?? ""}
-                cover={frontPage}
-                gradeName={gradeName ?? ""}
-                paperID={paperID ?? ""}
-                studyBuddyReference={studyBuddyReference ?? ""}
-            />
+            <div className="section">
+                <MainPaperComp
+                    category={category ?? ""}
+                    cover={frontPage}
+                    gradeName={gradeName ?? ""}
+                    paperID={paperID ?? ""}
+                    studyBuddyReference={studyBuddyReference ?? ""}
+                />
+            </div>
         </div>
     );
 }
