@@ -1,4 +1,11 @@
 import { useState } from "react"
+import { useQuery } from "react-query"
+import { useNavigate, useParams } from "react-router-dom"
+
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+import { get_special_papers } from "./api"
 
 interface ISpecialPaper {
     color: string
@@ -6,12 +13,21 @@ interface ISpecialPaper {
     name: string
 }
 
-const SpecialPaper: React.FC<ISpecialPaper> = ({ color, _id, name }) => {
+const SpecialPaper: React.FC<{
+    paper: ISpecialPaper,
+    gradeName: string
+}> = ({ paper: {color, _id, name}, gradeName }) => {
+    const navigate = useNavigate();
+
+
     return (
         <div className="col s6 m3 l2">
-            <div className="card hoverable z-depth-1" style={{
-                cursor: "pointer",backgroundColor: color,
-            }} /*onclick="location.href='/special/categories/<%= gradeName %>/<%=secondTier[r]._id%>';"*/>
+            <div className="card hoverable z-depth-1" 
+                style={{ cursor: "pointer",backgroundColor: color }} 
+                onClick={_ => {
+                    navigate(`/special/categories/${gradeName}/${_id}`)
+                }}
+            >
                 <div className="center card-content">
                     <span className="sub-names truncate white-text">{name}s</span>
                 </div>
@@ -20,8 +36,34 @@ const SpecialPaper: React.FC<ISpecialPaper> = ({ color, _id, name }) => {
     )
 }
 
+const SpecialPaperSkeleton = () => {
+    return (
+        <div className="col s6 m3 l2">
+            <div className="card hoverable z-depth-1" style={{
+                cursor: "pointer",
+            }}>
+                <div className="center card-content">
+                    <Skeleton/>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+interface ISubjectFetchResult {
+    secondTier: ISpecialPaper[]
+    gradeName: string
+}
+
+
 const SpecialPapersPage = () => {
-    const [special_papers, setSpecialPapers] = useState<ISpecialPaper[]>([]);
+    const { grade_reference_id } = useParams()
+    // const [special_papers, setSpecialPapers] = useState<ISpecialPaper[]>([]);
+
+    const { data: response, isLoading } = useQuery<ISubjectFetchResult>(['special_papers', grade_reference_id], () => get_special_papers(grade_reference_id ?? ""), {
+        enabled: !!grade_reference_id,
+        staleTime: 960000
+    })
 
     return (
         <div className="container">
@@ -39,9 +81,22 @@ const SpecialPapersPage = () => {
                             <div className="row">
 
                                 {
-                                    special_papers.map((paper, position) => 
-                                        <SpecialPaper {...paper} key={`special_paper_${position}`}/>
-                                    )
+                                    isLoading ?
+                                    <>
+                                        {
+                                            (new Array(6).fill(1)).map((_, position) => 
+                                                <SpecialPaperSkeleton key={`s_skeleton_${position}`}/>
+                                            )
+                                        }
+                                    </>
+                                    :
+                                    <>
+                                        {
+                                            response?.secondTier?.map((paper, position) => 
+                                                <SpecialPaper paper={paper} gradeName={response?.gradeName} key={`special_paper_${position}`}/>
+                                            )
+                                        }
+                                    </>
                                 }
 
                             </div>
