@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useZoeziMainTrackedState } from "../../../../context";
 import { useIsLoggedIn } from "../../../../hooks";
 import ContactUsComp from "./ContactUs";
@@ -28,7 +29,7 @@ const FooterComp = () => {
                             <div className="row center black-text">
                                 <p className="text-lighten-2">
                                     <small>
-                                        <span><a href="/termsofuse">Terms of Use</a> and <a href="/privacynotice">Privacy Notice.</a></span>
+                                        <span><Link to="/terms-of-use">Terms of Use</Link> and <Link to="/privacy-notice">Privacy Notice.</Link></span>
                                         <br/>Copyright © {new Date().getFullYear()} Zoezi Education<br/>
                                     </small>
                                 </p>

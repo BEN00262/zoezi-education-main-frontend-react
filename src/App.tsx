@@ -26,6 +26,8 @@ import { QueryClientProvider } from 'react-query';
 import { useEffect } from 'react';
 import ErrorPage from './pages/shared/error';
 import WhoseLearningPage from './pages/authenticated/whose_learning';
+import TermsOfUsePage from './pages/shared/terms_of_use';
+import PrivacyNoticePage from './pages/shared/privacy_notice';
 
 function App() {
   useEffect(() => {
@@ -52,6 +54,8 @@ function App() {
 
                   <Route path="/blog/:slug?" element={<BlogPage/>}/>
                   <Route path="/faq" element={<FAQPage/>}/>
+                  <Route path="/terms-of-use" element={<TermsOfUsePage/>}/>
+                  <Route path="/privacy-notice" element={<PrivacyNoticePage/>}/>
 
                   <Route element={<ProtectedRoute/>}>
                     {/* all routes that require auth */}
