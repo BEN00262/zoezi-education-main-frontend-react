@@ -1,6 +1,12 @@
 import { useMemo, useState } from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 import { useZoeziMainTrackedState } from "../../../context";
+import { get_dashboard_grades } from "./api";
 import GreetingsComp from "./components/greetings";
 
 interface IDashboardBaseContent {
@@ -29,9 +35,7 @@ const DashboardSampleGrade = () => {
                     <button className="waves-effect waves-light btn materialize-red z-depth-0" style={{
                         borderRadius:20,paddingLeft:30,paddingRight:30,
                     }}>
-                        <small>
-                            <b>Try Sample</b>
-                        </small>
+                        <small><b>Try Sample</b></small>
                     </button>
                 </div>
             </div>
@@ -72,32 +76,48 @@ const DashboardGradeCard: React.FC<{
 
 
     return (
-        <div className="card hoverable z-depth-1" style={{ cursor: "pointer" }} onClick={_ => {
-            // find the place to head and do the stuff
-            navigate(details.link)
-        }}>
+        <div className="col s6 m3 l2">
+            <div className="card hoverable z-depth-1" style={{ cursor: "pointer" }} onClick={_ => {
+                // find the place to head and do the stuff
+                navigate(details.link)
+            }}>
 
-            <div className="card-image">
-                <img className="img-box-responsive" src={`img/${details.name.toLowerCase()}.png`}/>
+                <div className="card-image">
+                    <img className="img-box-responsive" src={`img/${details.name.toLowerCase()}.png`}/>
+                </div>
+
+                <div className="row center card-content">
+                    {
+                        content.available ?
+                        <button className={`waves-effect waves-light center btn z-depth-0 ${content.subscribed ? "materialize-red" : ""}`} style={{
+                            borderRadius:20,paddingLeft:30,paddingRight:30
+                        }}>
+                            <small><b>{content.subscribed ? "OPEN" : "UNLOCK"}</b></small>
+                        </button>
+                        :
+                        <button className="waves-effect waves-light btn center z-depth-0 materialize-red" style={{
+                            borderRadius:20,paddingLeft:30,paddingRight:30
+                        }}>
+                            <small><b>COMING</b></small>
+                        </button>
+                    }
+                </div>
             </div>
+        </div>
+    )
+}
 
-            <div className="row center card-content">
-                {
-                    content.available ?
-                    <button className={`waves-effect waves-light center btn z-depth-0 ${content.subscribed ? "materialize-red" : ""}`} style={{
-                        borderRadius:20,paddingLeft:30,paddingRight:30
-                    }}>
-                        <small>
-                            <b>{content.subscribed ? "OPEN" : "UNLOCK"}</b>
-                        </small>
-                    </button>
-                    :
-                    <button className="waves-effect waves-light btn center z-depth-0 materialize-red" style={{
-                        borderRadius:20,paddingLeft:30,paddingRight:30
-                    }}>
-                        <small><b>COMING</b></small>
-                    </button>
-                }
+const DashboardGradeSkeletonComp = () => {
+    return (
+        <div className="col s6 m3 l2">
+            <div className="card hoverable z-depth-1" style={{ cursor: "pointer" }}>
+                <div className="row center">
+                    <Skeleton circle height={140} width={140}/>
+                </div>
+
+                <div className="row center card-content">
+                    <Skeleton width={"90%"} height={30}/>
+                </div>
             </div>
         </div>
     )
@@ -112,15 +132,13 @@ interface IDashboardData {
 const DashboardPage = () => {
     const { isManagedContext } = useZoeziMainTrackedState();
 
-    // fetched during page load ( on mount )
-    const [dashboard_content, setDashboardContent] = useState<IDashboardData>({
-        grades: [],
-        special_papers: []
-    });
+    const { data: dashboard_content, isLoading } = useQuery<IDashboardData>('dashboard_grades', get_dashboard_grades, {
+        staleTime: 9600000
+    })
 
     // check if the account is managed and has no open papers
     const is_managed_with_no_bought_content = useMemo(() => {
-        return isManagedContext && !dashboard_content.grades.length && !dashboard_content.special_papers.length;
+        return isManagedContext && !dashboard_content?.grades.length && !dashboard_content?.special_papers.length;
     }, [isManagedContext, dashboard_content]);
 
     return (
@@ -147,20 +165,32 @@ const DashboardPage = () => {
                                     </div>
                                 :
 
-                                <div className="col s6 m3 l2">
-                                    {/* mash the two data points and then display them yeah */}
+                                <>
                                     {
-                                        [
-                                            // v1 content
-                                            ...dashboard_content.grades.map(x => ({is_special: false, content: x })),
+                                        isLoading ?
+                                        <>
+                                            {
+                                                (new Array(6).fill(1)).map((_, position) => 
+                                                    <DashboardGradeSkeletonComp key={`grade_skeleton_${position}`}/>
+                                                )
+                                            }
+                                        </>
+                                        :
+                                        <>
+                                            {
+                                                [
+                                                    // v1 content
+                                                    ...(dashboard_content?.grades.map(x => ({is_special: false, content: x })) ?? []),
 
-                                            // v2 content
-                                            ...dashboard_content.special_papers.map(x => ({is_special: true, content: x }))  
-                                        ].map((content, position) => 
-                                            <DashboardGradeCard {...content}  key={`grade_${position}`}/>
-                                        )
+                                                    // v2 content
+                                                    ...(dashboard_content?.special_papers.map(x => ({is_special: true, content: x })) ?? [])  
+                                                ].map((content, position) => 
+                                                    <DashboardGradeCard {...content}  key={`grade_${position}`}/>
+                                                )
+                                            }
+                                        </>
                                     }
-                                </div>
+                                </>
                             }
                         </div>
                     </div>

@@ -1,24 +1,36 @@
-import { useState } from "react";
-
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 
-import { useZoeziMainTrackedState } from "../../../context";
+import { switch_to_selected_student, useZoeziMainDispatch, useZoeziMainTrackedState } from "../../../context";
 import { get_children_within_account } from "./api";
 import { IChild } from "./types";
 
 const ChildComp: React.FC<{ child: IChild }> = ({ child }) => {
     const navigate = useNavigate();
+    const zoeziMainDispatch = useZoeziMainDispatch();
 
     // choose the learner and then redirect to the previously clicked link
-    const redirect_to_previously
+    const redirect_to_previously_clicked_link = (student_reference: string, selected_student_lname: string) => {
+        // make the request to the server
+        switch_to_selected_student(
+            zoeziMainDispatch,
+            {
+                student_reference,
+                selected_student_lname
+            }
+        );
+
+        // question is what if we dont have anything on the navigation stack ?
+        navigate(-1);
+    }
 
     return (
         <div className="col s12 m4">
             <div 
+                onClick={_ => redirect_to_previously_clicked_link(child._id, child.lastname)}
                 // onclick="window.location.href='/who-is-learning/<%=child._id.toString()%>/?destination=<%=original_url%>'"
                 className="hoverable z-depth-1" 
                 style={{

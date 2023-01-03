@@ -30,10 +30,10 @@ export const ForwardProtectedRoute = () => {
 
 export const WhoseLearningProtectedRoute = () => {
     const location = useLocation();
-    const { isParentContext } = useZoeziMainTrackedState();
+    const { student_reference } = useZoeziMainTrackedState();
 
 
-    if (isParentContext) {
+    if (!student_reference) {
         return <Navigate to="/choose-child" state={{ from: location }}/>
     }
 

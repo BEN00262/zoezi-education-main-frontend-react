@@ -8,11 +8,15 @@ import { useIsLoggedIn } from "../../../../hooks";
 
 const NavBarComp = () => {
     const {
-        isManagedContext, isParentContext,
+        isManagedContext, student_reference,
         isZoeziMobileApp
     } = useZoeziMainTrackedState();
 
-    const isLoggedIn = useIsLoggedIn()
+    const isLoggedIn = useIsLoggedIn();
+    
+    const isParentContext = useMemo(() => {
+        return !student_reference;
+    }, [student_reference]);
 
     useEffect(() => {
         M.Sidenav.init(document.querySelectorAll('.sidenav'));
