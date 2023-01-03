@@ -28,6 +28,8 @@ import ErrorPage from './pages/shared/error';
 import WhoseLearningPage from './pages/authenticated/whose_learning';
 import TermsOfUsePage from './pages/shared/terms_of_use';
 import PrivacyNoticePage from './pages/shared/privacy_notice';
+import ReportsPage from './pages/authenticated/reports';
+import LibraryPage from './pages/authenticated/library';
 
 function App() {
   useEffect(() => {
@@ -63,6 +65,9 @@ function App() {
                     
                     <Route element={<WhoseLearningProtectedRoute/>}>
                       <Route path="/dashboard" element={<DashboardPage/>}/>
+                      <Route path="/reports" element={<ReportsPage/>}/>
+                      <Route path="/library" element={<LibraryPage/>}/>
+
                       <Route path="/subjects/:grade_reference_id" element={<SubjectsPage/>}/>
 
                       {/* special paper(s) navigation */}
