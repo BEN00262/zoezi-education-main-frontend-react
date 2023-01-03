@@ -1,5 +1,11 @@
 import { useState } from "react";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+import { get_grade_subjects } from "./api";
 
 interface ISubject {
     subject: string // name of the subject
@@ -11,7 +17,7 @@ const SubjectComp: React.FC<{subject: ISubject, grade_name: string }> = ({ subje
         <div className="col s6 m3 l2">
             <div className="card hoverable z-depth-1" style={{ cursor: "pointer" }} /*onclick="location.href='/question/<%= gradeName %>/<%=subjects[r]._id%>';"*/>
                 <div className="card-image">
-                    <img className="img-box-responsive" src={`img/${grade_name}/<%= ${subject.toLowerCase().split(" ")[0]}.png`}/>
+                    <img className="img-box-responsive" src={`/img/${grade_name}/${subject.toLowerCase().split(" ")[0]}.png`}/>
                 </div>
                 <div className="center card-content">
                     <span className="sub-names truncate">{subject}</span>
@@ -19,13 +25,36 @@ const SubjectComp: React.FC<{subject: ISubject, grade_name: string }> = ({ subje
             </div>
         </div>
     )
+}
+
+const SubjectSkeletonComp = () => {
+    return (
+        <div className="col s6 m3 l2">
+            <div className="card hoverable z-depth-1" style={{ cursor: "pointer" }}>
+                <div className="row center">
+                    <Skeleton circle height={140} width={140}/>
+                </div>
+                <div className="center card-content">
+                    <span className="sub-names truncate"><Skeleton inline/></span>
+                </div>
+            </div>
+        </div>
+    )
 } 
 
+interface ISubjectFetchResult {
+    subjects: ISubject[]
+    gradeName: string
+}
+
 const SubjectsPage = () => {
-    const { grades_reference_id, grade_name } = useParams();
-    const [subjects, setSubjects] = useState<ISubject[]>([]);
+    const { grade_reference_id } = useParams();
 
     // fetch the subjects and then display them ( that easy )
+    const { data: response, isLoading } = useQuery<ISubjectFetchResult>(['grade_subjects', grade_reference_id], () => get_grade_subjects(grade_reference_id ?? ""), {
+        staleTime: 9600000,
+        enabled: !!grade_reference_id
+    })
 
     return (
         <div className="container">
@@ -43,9 +72,22 @@ const SubjectsPage = () => {
                         <div className="section">
                             <div className="row">
                                 {
-                                    subjects.map((subject, position) => 
-                                        <SubjectComp key={`subject_${position}`} subject={subject} grade_name={grade_name ?? ""}/>
-                                    )
+                                    isLoading ?
+                                    <>
+                                        {
+                                            (new Array(6).fill(1)).map((_, position) => 
+                                                <SubjectSkeletonComp key={`subject_${position}`}/>
+                                            )
+                                        }
+                                    </>
+                                    :
+                                    <>
+                                        {
+                                            response?.subjects?.map((subject, position) => 
+                                                <SubjectComp key={`subject_${position}`} subject={subject} grade_name={response?.gradeName ?? ""}/>
+                                            )
+                                        }
+                                    </>
                                 }
                             </div>
                         </div>

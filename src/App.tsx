@@ -59,7 +59,7 @@ function App() {
                     
                     <Route element={<WhoseLearningProtectedRoute/>}>
                       <Route path="/dashboard" element={<DashboardPage/>}/>
-                      <Route path="/subjects/:grade_name/:grade_reference_id" element={<SubjectsPage/>}/>
+                      <Route path="/subjects/:grade_reference_id" element={<SubjectsPage/>}/>
 
                       {/* special paper(s) navigation */}
                       <Route path="/special/:grade_reference_id" element={<SpecialPapersPage/>}/>
