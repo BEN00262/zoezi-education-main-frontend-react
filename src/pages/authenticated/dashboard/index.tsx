@@ -66,7 +66,7 @@ const DashboardGradeCard: React.FC<{
 
             return {
                 name: local_content.name,
-                link: local_content.subscribed ? `/special/${local_content._id}` : `/subscription_payments/${local_content.name}/${local_content._id}/true`
+                link: local_content.subscribed ? `/special/${local_content._id}` : `/subscription_payments/${local_content.name}/${local_content._id}/special`
             }
         }
 

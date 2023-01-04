@@ -102,7 +102,7 @@ const QuestionComp = ({ questions, alreadyDone, isKiswahili, wasTimed }:{
     },[currentPage]);
 
     const findAlreadyDoneHistory = (previous_snapshot: ILibraryPaperContent[]) => {
-        return previous_snapshot.reduce((acc, snapshot) => {
+        return previous_snapshot?.reduce((acc, snapshot) => {
             switch (snapshot.questionType) {
                 case 'normal':
                     {
@@ -172,7 +172,7 @@ const QuestionComp = ({ questions, alreadyDone, isKiswahili, wasTimed }:{
     const AddPageStudentPaperContent = (question_id: string,content: ILibraryPaperContent) => {
         let local_paper_tree = pageStudentPaperContent[currentPage];
 
-        let foundIndex = local_paper_tree.findIndex(x => x.content.question === question_id);
+        let foundIndex = local_paper_tree?.findIndex(x => x.content.question === question_id);
 
         if (foundIndex < 0) {
             setPageStudentPaperContent({
@@ -282,7 +282,7 @@ const QuestionComp = ({ questions, alreadyDone, isKiswahili, wasTimed }:{
 
     const findQuestion = useCallback((questionID: string) => {
         let page = pageStudentPaperContent[currentPage]
-        return page.find(x => x.content.question === questionID) || null;
+        return page?.find(x => x.content.question === questionID) || null;
     }, [currentPage]);
 
 

@@ -1,6 +1,5 @@
 import { Card, Button, Container  } from 'react-materialize';
 import { useMediaQuery } from 'react-responsive';
-import Swipe from 'react-easy-swipe';
 
 import NormalQuestionComp from './normal_question_comp';
 import ComprehensionComp from './comprehension_question_comp';
@@ -51,92 +50,81 @@ const QuestionComp = ({ paper, fetchData }:{
 
 
     return (
-
-                <Swipe
-                    onSwipeLeft = {event => {
-                        fetchData(1);
-                    }}
-
-                    tolerance={120}
-
-                    onSwipeRight = {event => {
-                        fetchData(-1);
-                    }}
-                >
-                    <div className="white" style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent:"space-between",
-                        borderRadius:"2px",
-                        boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
-                        padding:"5px 6px",
-                        position:"sticky",
-                        top: isTabletOrMobileDevice ? 64.2 : 56.2,
-                        zIndex:2,
+        <>
+            <div className="white" style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent:"space-between",
+                borderRadius:"2px",
+                boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
+                padding:"5px 6px",
+                position:"sticky",
+                top: isTabletOrMobileDevice ? 64.2 : 56.2,
+                zIndex:2,
+            }}>
+                    <div className="materialize-red white-text" style={{
+                        alignSelf:"center",
+                        padding:"5px",
+                        borderRadius:"3px",
                     }}>
-                            <div className="materialize-red white-text" style={{
-                                alignSelf:"center",
-                                padding:"5px",
-                                borderRadius:"3px",
-                            }}>
-                                <b>
-                                    <span>
-                                        {isKiswahili ? "ALAMA":"SCORE"} : {`${paper.score.passed}/${paper.score.total}`}
-                                    </span>
-                                </b>
-                            </div>
-
-                            <div>
-                                <button disabled className="waves-effect waves-light z-depth-1 btn-small">{
-                                    isKiswahili ? "MASWALI ZAIDI" : "MORE QUESTIONS"
-                                }</button>
-                            </div>
+                        <b>
+                            <span>
+                                {isKiswahili ? "ALAMA":"SCORE"} : {`${paper.score.passed}/${paper.score.total}`}
+                            </span>
+                        </b>
                     </div>
-                    {/* "https://zoezi-mitzanimedia.com/question/five/img/background2.webp" */}
-                    <div id="zoeziPaper">
-                        <Card
+
+                    <div>
+                        <button disabled className="waves-effect waves-light z-depth-1 btn-small">{
+                            isKiswahili ? "MASWALI ZAIDI" : "MORE QUESTIONS"
+                        }</button>
+                    </div>
+            </div>
+
+            <div id="zoeziPaper">
+                <Card
+                    style={{
+                        marginTop: "13px"
+                    }}
+
+                    header= {
+                        <div className="card-image">
+                            <div className="postergrad">
+                                <img alt="" style={{
+                                    maxWidth:"100%",
+                                    height:"84px",
+                                    objectFit:"cover",
+                                }} src="/img/background2.webp"/>
+                            </div>
+                            <span className="card-title text-center sub-names truncate text-bold teal">{
+                                `${paper.subject}`
+                            }</span>
+                        </div>
+                    }
+                >
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                    }
+                    }>
+                        
+                        { paper.content.map((content: IContent,index: number) => selectQuestionType(content,index)) }
+                        
+                        <Button
+                            node="button"
+                            waves="light"
+                            small
                             style={{
-                                marginTop: "13px"
+                                marginTop:"15px"
                             }}
 
-                            header= {
-                                <div className="card-image">
-                                    <div className="postergrad">
-                                        <img alt="" style={{
-                                            maxWidth:"100%",
-                                            height:"84px",
-                                            objectFit:"cover",
-                                        }} src="/img/background2.webp"/>
-                                    </div>
-                                    <span className="card-title text-center sub-names truncate text-bold teal">{
-                                        `${paper.subject}`
-                                    }</span>
-                                </div>
-                            }
+                            disabled
                         >
-                            <form onSubmit={(e) => {
-                                e.preventDefault();
-                            }
-                            }>
-                                
-                                { paper.content.map((content: IContent,index: number) => selectQuestionType(content,index)) }
-                                
-                                <Button
-                                    node="button"
-                                    waves="light"
-                                    small
-                                    style={{
-                                        marginTop:"15px"
-                                    }}
-
-                                    disabled
-                                >
-                                    { isKiswahili ? "TUMA MAJIBU" : "SUBMIT ANSWERS" }
-                                </Button>
-                            </form>
-                        </Card>
-                    </div>
-                </Swipe>
+                            { isKiswahili ? "TUMA MAJIBU" : "SUBMIT ANSWERS" }
+                        </Button>
+                    </form>
+                </Card>
+            </div>
+        </>
     )
 }
 

@@ -35,6 +35,9 @@ import SamplePaperPage from './pages/authenticated/dashboard/subpages/sample_pap
 import SettingsPage from './pages/authenticated/settings/student';
 import AccountDeletePage from './pages/authenticated/settings/student/subpages/account_delete';
 import ParentSettingsPage from './pages/authenticated/settings/parent';
+import SubscriptionsPage from './pages/authenticated/subscriptions';
+import StudyBuddiesPage from './pages/authenticated/studdy-buddies';
+import StudyParticipationPage from './pages/authenticated/studdy-buddies/participation';
 
 function App() {
   useEffect(() => {
@@ -77,6 +80,13 @@ function App() {
                       {/* settings */}
                       <Route path="/student-edit-profile" element={<SettingsPage/>}/>
                       <Route path="/account-delete/:student_reference" element={<AccountDeletePage/>}/>
+
+                      {/* making subscription choices */}
+                      <Route path="/subscription_payments/:gradeID/:gradeName/:is_special_grade?" element={<SubscriptionsPage/>}/>
+                      
+                      {/* study buddies */}
+                      <Route path="/study-buddies" element={<StudyParticipationPage/>}/>
+                      <Route path="/study-buddies/:gradeName/:category/:paperID/:savedStateID/:studyBuddyReference" element={<StudyBuddiesPage/>}/>
 
                       {/* standard papers */}
                       <Route path="/paper-cover/:gradeName/:category/:paperID/:studyBuddyReference?" element={<MainPaperPage frontPage={true}/>}/>

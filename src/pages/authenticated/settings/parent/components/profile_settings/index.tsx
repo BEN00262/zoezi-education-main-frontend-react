@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 const ParentProfileSettingsComp = () => {
+    const [edit_password, setEditPassword] = useState(false);
+
     return (
         <div className="card z-depth-0" style={{ border: "1px solid #dcdee2" }}>
 
@@ -44,8 +48,7 @@ const ParentProfileSettingsComp = () => {
                     </div>
                   </div>
     
-                  <div id="passwordsedit" hidden>
-    
+                  <div hidden={!edit_password}>
                     <div className="row">
                       <div className="col m6 s12">
                         <label htmlFor="oldpassword"><b>Old Password</b></label>
@@ -68,7 +71,7 @@ const ParentProfileSettingsComp = () => {
                     <div className="col s12 m6">
                       <p>
                         <label>
-                          <input type="checkbox" id="changePasswordToggle" /*onclick="ToggleChangePassword()"*//>
+                          <input type="checkbox" id="changePasswordToggle" onClick={_ => setEditPassword(old => !old)}/>
                           <span className="light sub-modal-texts">Change password</span>
                         </label>
                       </p>
@@ -78,12 +81,7 @@ const ParentProfileSettingsComp = () => {
                       <button className="waves-effect waves-light btn-small z-depth-0 sub-modal-texts" type="submit" style={{ width: "100%" }}><b>Edit Profile</b></button>
                     </div>
                   </div>
-    
-                  
-    
-                  {/* <div className="input-field">
-                    <input  type="hidden" name="_csrf" value="<%= csrftoken %>">
-                  </div> */}
+
                 </form>
               </div>
             </div>

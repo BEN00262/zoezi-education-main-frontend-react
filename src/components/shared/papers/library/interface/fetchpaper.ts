@@ -4,8 +4,8 @@ import { ILibPaperQuestions } from "./ILibPaper"
 
 const getLibraryPaper: (baseURL: string) => Promise<ILibPaperQuestions | null> = (baseURL: string) => {
     return axios.get(baseURL)
-        .then(({ data }: { data: ILibPaperQuestions | null }) => {
-            return data ? data : null
+        .then(({ data }: any) => {
+            return (data ? data.content : null) as ILibPaperQuestions | null 
         })
 }
 

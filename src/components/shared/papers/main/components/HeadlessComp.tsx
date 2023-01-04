@@ -1,6 +1,6 @@
 // @ts-ignore
 import M from 'materialize-css';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { updateQuestions, setSubjectName, useZoeziPaperDispatch } from '../contexts/global';
 import { generate_paper_map, get_number_of_questions_in_paper, IPaperMap } from '../grouper/grouper';
 import { IQuestion, PagedPaper } from '../rendering_engine/DataLoaderInterface';
@@ -32,19 +32,19 @@ const Button: React.FC<IButtonProps> = ({ icon, btnText, onClick, isDisabled, co
 }
 
 // <!-- :gradeName/:category/:paperID -->
-const gradeName = document.getElementById("gradeName")?.innerText
-const category = document.getElementById("category")?.innerText
-const paperID = document.getElementById("paperID")?.innerText
+// const gradeName = document.getElementById("gradeName")?.innerText
+// const category = document.getElementById("category")?.innerText
+// const paperID = document.getElementById("paperID")?.innerText
 
 // const gradeName = "kcpe"
 // const category = "2020"
 // const paperID = "616a5d6d9ad38500164f9227"; // "616d77939b93740016005943"; // "61a06214c01bb6001670f0bd"
-const savedStateID = document.getElementById("savedStateID")?.innerText || "";
+// const savedStateID = document.getElementById("savedStateID")?.innerText || "";
 
-const BASE_URL = `/special/library_paper_questions/${gradeName}/${category}/${paperID}/${savedStateID}`
+// const BASE_URL = `/special/library_paper_questions/${gradeName}/${category}/${paperID}/${savedStateID}`
 // const BASE_URL = `http://localhost:3600/library_paper_questions/${gradeName}/${category}/${paperID}/${savedStateID}`
 // we should pass the id though to the question
-const paperFetch = new PaperFetch(new HttpClientAxios(), BASE_URL);
+// const paperFetch = new PaperFetch(new HttpClientAxios(), BASE_URL);
 
 // we take the page map and the actual question array
 const initialize_pages_structures = (paperMap: IPaperMap, questions: IQuestion[]) => {
@@ -89,10 +89,14 @@ const initialize_pages_structures = (paperMap: IPaperMap, questions: IQuestion[]
 }
 
 // this is the first thing seen after the paper has been fetched from the db
-const HeadlessComp = () => {
+const HeadlessComp: React.FC<{ baseURL: string, gradeName: string, paperID: string }> = ({ baseURL, gradeName, paperID }) => {
     const dispatch = useZoeziPaperDispatch();
     const [paper, setPaper] = useState<PagedPaper>();
     const [navigate, setNavigate] = useState(false);
+
+    const paperFetch = useMemo(() => {
+        return new PaperFetch(new HttpClientAxios(), baseURL);
+    }, [baseURL])
 
     useEffect(() => {
         paperFetch.getPaper()
