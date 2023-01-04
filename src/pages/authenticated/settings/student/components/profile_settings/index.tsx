@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useZoeziMainTrackedState } from "../../../../../context";
-import { IStudent } from "../../types";
+import { useZoeziMainTrackedState } from "../../../../../../context";
+import { IStudent } from "../../../types";
 
 const ProfileSettingsComp: React.FC<IStudent> = (student) => {
     const { isManagedContext } = useZoeziMainTrackedState();

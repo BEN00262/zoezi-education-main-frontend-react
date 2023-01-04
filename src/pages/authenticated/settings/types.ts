@@ -5,6 +5,7 @@ export interface IStudent {
     grade: string
     school: string
     gender: string
+    timeRemaining: string
     preferences: {
         numberOfQuestions: number
     }

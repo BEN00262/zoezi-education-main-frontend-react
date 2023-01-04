@@ -1,4 +1,4 @@
-import { IStudent } from "../../types";
+import { IStudent } from "../../../types";
 
 const PreferenceComp: React.FC<IStudent> = ({ preferences }) => {
     return (

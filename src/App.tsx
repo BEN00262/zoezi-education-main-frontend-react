@@ -32,8 +32,9 @@ import ReportsPage from './pages/authenticated/reports';
 import LibraryPage from './pages/authenticated/library';
 import MainPaperPage from './pages/authenticated/dashboard/subpages/paper';
 import SamplePaperPage from './pages/authenticated/dashboard/subpages/sample_paper';
-import SettingsPage from './pages/authenticated/settings';
-import AccountDeletePage from './pages/authenticated/settings/subpages/account_delete';
+import SettingsPage from './pages/authenticated/settings/student';
+import AccountDeletePage from './pages/authenticated/settings/student/subpages/account_delete';
+import ParentSettingsPage from './pages/authenticated/settings/parent';
 
 function App() {
   useEffect(() => {
@@ -66,6 +67,7 @@ function App() {
                   <Route element={<ProtectedRoute/>}>
                     {/* all routes that require auth */}
                     <Route path="/choose-child" element={<WhoseLearningPage/>}/>
+                    <Route path="/editprofile" element={<ParentSettingsPage/>}/>
                     
                     <Route element={<WhoseLearningProtectedRoute/>}>
                       <Route path="/dashboard" element={<DashboardPage/>}/>

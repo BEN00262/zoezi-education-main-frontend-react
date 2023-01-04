@@ -2,12 +2,12 @@
 import M from "materialize-css"
 import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { useZoeziMainTrackedState } from "../../../context";
+import { useZoeziMainTrackedState } from "../../../../context";
 import { get_current_student } from "./api";
 import PreferenceComp from "./components/preferences";
 import ProfileSettingsComp from "./components/profile_settings";
 import SubscriptionsComp from "./components/subscriptions";
-import { IStudent } from "./types";
+import { IStudent } from "../types";
 
 const SettingsPage = () => {
     const { isManagedContext, authToken } = useZoeziMainTrackedState();
