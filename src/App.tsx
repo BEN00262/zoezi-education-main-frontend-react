@@ -32,6 +32,8 @@ import ReportsPage from './pages/authenticated/reports';
 import LibraryPage from './pages/authenticated/library';
 import MainPaperPage from './pages/authenticated/dashboard/subpages/paper';
 import SamplePaperPage from './pages/authenticated/dashboard/subpages/sample_paper';
+import SettingsPage from './pages/authenticated/settings';
+import AccountDeletePage from './pages/authenticated/settings/subpages/account_delete';
 
 function App() {
   useEffect(() => {
@@ -69,6 +71,10 @@ function App() {
                       <Route path="/dashboard" element={<DashboardPage/>}/>
                       <Route path="/reports" element={<ReportsPage/>}/>
                       <Route path="/library" element={<LibraryPage/>}/>
+
+                      {/* settings */}
+                      <Route path="/student-edit-profile" element={<SettingsPage/>}/>
+                      <Route path="/account-delete/:student_reference" element={<AccountDeletePage/>}/>
 
                       {/* standard papers */}
                       <Route path="/paper-cover/:gradeName/:category/:paperID/:studyBuddyReference?" element={<MainPaperPage frontPage={true}/>}/>

@@ -6,10 +6,15 @@ import M from "materialize-css"
 import { useZoeziMainTrackedState } from "../../../../context"
 import { useIsLoggedIn } from "../../../../hooks";
 
+const dropdown_options = {
+    hover: true,
+    coverTrigger: false
+};
+
 const NavBarComp = () => {
     const {
         isManagedContext, student_reference,
-        isZoeziMobileApp
+        isZoeziMobileApp, iszoeziDesktopApp
     } = useZoeziMainTrackedState();
 
     const isLoggedIn = useIsLoggedIn();
@@ -20,6 +25,11 @@ const NavBarComp = () => {
 
     useEffect(() => {
         M.Sidenav.init(document.querySelectorAll('.sidenav'));
+
+        // init the rest of the stuff
+        M.Dropdown.init(document.querySelectorAll('#desktopprofile'), dropdown_options);
+        M.Dropdown.init(document.querySelectorAll('#desktopprofile2'), dropdown_options);
+        M.Dropdown.init(document.querySelectorAll('#phoneprofile'), dropdown_options);
     }, [])
 
     return (
@@ -28,7 +38,7 @@ const NavBarComp = () => {
                 isLoggedIn ? 
                 <>
                     <ul id="dropdown1" className="dropdown-content lighten-2 hide-on-med-and-down">
-                        <li><a href="<%=isNotParentMode ? '/student-edit-profile' : '/editprofile'%>" className="black-text">Settings</a></li>
+                        <li><Link to={!isParentContext ? '/student-edit-profile' : '/editprofile'} className="black-text">Settings</Link></li>
                         {
                             !isParentContext && !isManagedContext ? 
                             <>
@@ -52,7 +62,7 @@ const NavBarComp = () => {
                     <div className="nav-wrapper" style={{
                         margin: "0 auto",maxWidth:1280,width: "90%",
                     }}>
-                        <a id="logo-container" href="/" className="brand-logo materialize-red-text sub-headings"><span className="teal-text">ZO</span>EZ<span className="teal-text">I</span></a>
+                        <Link id="logo-container" to="/" className="brand-logo materialize-red-text sub-headings"><span className="teal-text">ZO</span>EZ<span className="teal-text">I</span></Link>
                             
                         {
                             isZoeziMobileApp ? 
@@ -94,7 +104,7 @@ const NavBarComp = () => {
                                     textTransform: "none",
                                 }}>Register</Link></li>
                                 {/* <!-- check whether its on a desktop app if so render something different --> */}
-                                <li><a href="<%=isDesktopApp ? '/app/contactus' : '#contactusparent'%>">Contact Us</a></li>
+                                <li><Link to={iszoeziDesktopApp ? '/app/contactus' : '#contactusparent'}>Contact Us</Link></li>
                             </ul>
                         }
                         <a href="#" data-target="nav-mobile" className="sidenav-trigger"><i className="material-icons">menu</i></a>
@@ -137,7 +147,7 @@ const NavBarComp = () => {
                                             }
                                         </>
                                         :
-                                        <li><a href="<%=isNotParentMode ? '/student-edit-profile' : '/editprofile'%>"><i className="material-icons prefix">settings</i>Settings</a></li>
+                                        <li><Link to={!isParentContext ? '/student-edit-profile' : '/editprofile'}><i className="material-icons prefix">settings</i>Settings</Link></li>
                                     }
 
                                     <li><a href="/faq"><i className="material-icons prefix">question_answer</i>Faq</a></li>
@@ -211,14 +221,14 @@ const NavBarComp = () => {
                         </Link></li>
         
                         <li>
-                        <a href="<%=isNotParentMode ? '/student-edit-profile' : '/editprofile'%>" className="zoezi-link-clickable">
+                        <Link to={!isParentContext ? '/student-edit-profile' : '/editprofile'} className="zoezi-link-clickable">
                             <div>
                                 <span className="zoezi-bottom-nav-icon">
                                     <i className={`"material-icons <%= currentPage.includes(isNotParentMode ? '/student-edit-profile' : '/editprofile') ? "teal-text accent-4" : ""%></i>" style="height: 20px;"`}>settings</i>
                                 </span>
                                 <span className="zoezi-bottom-nav-title">Settings</span>
                             </div>
-                        </a></li>
+                        </Link></li>
                     </ul>
                 </div>
             </nav>
