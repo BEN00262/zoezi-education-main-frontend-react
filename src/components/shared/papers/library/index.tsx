@@ -4,6 +4,7 @@ import { Container } from 'react-materialize';
 import getLibraryPaper from './interface/fetchpaper'
 import { ILibPaperQuestions } from './interface/ILibPaper';
 
+const LazyQuestionComponent = React.lazy(() => import('./components/question_comp'));
 
 const LibraryPaper:React.FC<{libraryRef: string}> = ({ libraryRef }) => {
   const [data,setData] = useState<ILibPaperQuestions | null>(null);
@@ -24,9 +25,6 @@ const LibraryPaper:React.FC<{libraryRef: string}> = ({ libraryRef }) => {
       })
   }
 
-  const LazyQuestionComponent = React.lazy(() => import('./components/question_comp'));
-
-
   return (
         <>
           <Suspense fallback={
@@ -34,7 +32,7 @@ const LibraryPaper:React.FC<{libraryRef: string}> = ({ libraryRef }) => {
                 Preparing paper ...
             </Container>
           }>
-            {data && <LazyQuestionComponent paper={data} fetchData={fetchData}/>}
+            {data && <LazyQuestionComponent paper={data}/>}
           </Suspense>
       </>
   )

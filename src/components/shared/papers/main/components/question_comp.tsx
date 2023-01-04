@@ -39,6 +39,8 @@ const useCreateShareableLink = (endpoint: string) => {
             if (data && data.status) {
                 // we have the redirect url
                 // we will redirect from the server :)
+                // copy the link to the clipboard
+                navigator.clipboard.writeText(`${window.location.href}${data.invite_link}`)
                 return;
             }
 

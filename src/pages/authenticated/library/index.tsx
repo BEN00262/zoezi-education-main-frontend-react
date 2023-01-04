@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import M from 'materialize-css';
 
 import { get_library_details } from "./api";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -48,6 +49,7 @@ interface ILibrary {
 
 const LibraryPage = () => {
     // const [library, setLibrary] = useState<ILibrary[]>([]);
+    const navigate = useNavigate();
 
     const { data: library } = useQuery<ILibrary[]>('library', get_library_details, {
         staleTime: 1200000
@@ -109,9 +111,13 @@ const LibraryPage = () => {
                                                                                 papers.map(({ grade, subject, score: {passed, total}, _id }) => {
                                                                                     return (
                                                                                         <div className="col s6 m3 l2">
-                                                                                            <div className="hoverable" style={{
-                                                                                                backgroundColor: "#fffde7",marginBottom:5,cursor: "pointer",border: "1px solid #d3d3d3",borderRadius:2,padding:4,
-                                                                                            }}>
+                                                                                            <div className="hoverable" 
+                                                                                                style={{
+                                                                                                    backgroundColor: "#fffde7",marginBottom:5,cursor: "pointer",border: "1px solid #d3d3d3",borderRadius:2,padding:4,
+                                                                                                }}
+
+                                                                                                onClick={_ => navigate(`/library/normal/${_id}`)}
+                                                                                            >
 
                                                                                                 <div className="center">
 

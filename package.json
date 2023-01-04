@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.0.2",
+    "@fullcalendar/daygrid": "^6.0.2",
+    "@fullcalendar/react": "^6.0.2",
     "@glidejs/glide": "^3.6.0",
     "@splidejs/react-splide": "^0.7.12",
     "@types/glidejs__glide": "^3.6.1",

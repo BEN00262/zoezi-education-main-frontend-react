@@ -6,9 +6,8 @@ import ComprehensionComp from './comprehension_question_comp';
 import OldVersionQuestion from './old_version_question';
 import { IContent, ILibPaperQuestions } from '../interface/ILibPaper';
 
-const QuestionComp = ({ paper, fetchData }:{
-    paper: ILibPaperQuestions | null,
-    fetchData: (operation: number) => void
+const QuestionComp = ({ paper }:{
+    paper: ILibPaperQuestions | null
 }) => {
 
     const isTabletOrMobileDevice = useMediaQuery({
@@ -102,25 +101,8 @@ const QuestionComp = ({ paper, fetchData }:{
                         </div>
                     }
                 >
-                    <form onSubmit={(e) => {
-                        e.preventDefault();
-                    }
-                    }>
-                        
+                    <form onSubmit={(e) => {e.preventDefault()}}>
                         { paper.content.map((content: IContent,index: number) => selectQuestionType(content,index)) }
-                        
-                        <Button
-                            node="button"
-                            waves="light"
-                            small
-                            style={{
-                                marginTop:"15px"
-                            }}
-
-                            disabled
-                        >
-                            { isKiswahili ? "TUMA MAJIBU" : "SUBMIT ANSWERS" }
-                        </Button>
                     </form>
                 </Card>
             </div>

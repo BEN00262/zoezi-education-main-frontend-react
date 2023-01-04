@@ -81,6 +81,9 @@ const NavBarComp = () => {
                                     <li><Link to="/library">Library</Link></li>
                                     <li className="disabled"><Link to="/reports">Reports</Link></li>
                                     <li><Link to="/study-buddies">Groups</Link></li>
+                                    {/* this only appears within a school / managed context */}
+                                    {/* <li><Link to="/timetable">Assignments</Link></li> */}
+                                    <li><Link to="/timetable">Timetable</Link></li>
                                     <li><Link to="/blog">Media</Link></li>
                                     <li><Link to="/faq">Faq</Link></li>
                                     <li><a className="dropdown-trigger" id="desktopprofile2" href="#!" data-target="dropdown1">My Account<i className="material-icons right">arrow_drop_down</i></a></li>

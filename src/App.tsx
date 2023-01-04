@@ -38,6 +38,9 @@ import ParentSettingsPage from './pages/authenticated/settings/parent';
 import SubscriptionsPage from './pages/authenticated/subscriptions';
 import StudyBuddiesPage from './pages/authenticated/studdy-buddies';
 import StudyParticipationPage from './pages/authenticated/studdy-buddies/participation';
+import SLibraryPaperPage from './pages/authenticated/library/special_paper';
+import NLibraryPaperPage from './pages/authenticated/library/normal_paper';
+import TimeTablePage from './pages/authenticated/timetable';
 
 function App() {
   useEffect(() => {
@@ -75,7 +78,13 @@ function App() {
                     <Route element={<WhoseLearningProtectedRoute/>}>
                       <Route path="/dashboard" element={<DashboardPage/>}/>
                       <Route path="/reports" element={<ReportsPage/>}/>
+
+                      {/* timetable */}
+                      <Route path='/timetable' element={<TimeTablePage/>} />
+                      
                       <Route path="/library" element={<LibraryPage/>}/>
+                      <Route path="/library/special/:gradeName/:category/:paperID/:savedStateID/:studyBuddyReference" element={<SLibraryPaperPage/>}/>
+                      <Route path="/library/normal/:libraryRef" element={<NLibraryPaperPage/>}/>
 
                       {/* settings */}
                       <Route path="/student-edit-profile" element={<SettingsPage/>}/>
