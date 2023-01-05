@@ -14,6 +14,7 @@ interface IShares {
     _id: string
     category: string
     studyBuddyReference: string
+    fromWhen: string
 }
 
 const MySharesMyFriendsComp: React.FC<{
@@ -39,6 +40,7 @@ const MySharesMyFriendsComp: React.FC<{
                                     </div>
                                     <div className="center card-content">
                                         <span className="sub-names truncate">{share.fullname}</span>
+                                        <span className="sub-modal-texts truncate">{share.fromWhen}</span>
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +80,16 @@ const StudyParticipationPage = () => {
 
                     <div className="col s12">
                         <h3 className="hide-on-small-only"><i className="mdi-content-send brown-text"></i></h3>
-                        <h5 className="center sub-sub-headings">STUDY BUDDIES</h5>
+                        
+                        <div className="valign-wrapper buddies-mast" style={{ 
+                            width: "100%", 
+                            backgroundImage: 'linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.5)),url("/img/study_buddies.svg")',
+                            height: "100px",
+                            objectFit: "cover",
+                            justifyContent: "center"
+                        }}>
+                            <h5 className="center sub-sub-headings teal-text center-align">STUDY BUDDIES</h5>
+                        </div>
                         <div className="divider"></div>
 
                         {/* <!--pass all the available grades here--> */}

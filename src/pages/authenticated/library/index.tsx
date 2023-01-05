@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
+
 // @ts-ignore
 import M from 'materialize-css';
 
@@ -179,9 +180,14 @@ const LibraryPage = () => {
                                                                                 spapers.map(({ grade, subject, scores: {passed, total}, _id, paperID, historyID }) => {
                                                                                     return (
                                                                                         <div className="col s6 m3 l2">
-                                                                                            <div className="hoverable" style={{
-                                                                                                backgroundColor: "#fffde7",marginBottom:5,cursor: "pointer",border: "1px solid #d3d3d3",borderRadius:2,padding:4,/*"onclick="javascript: "location.href=/special/library_paper_questions_display/<%=gradeName%>/<%=category%>/<%=paperID%>/<%=historyID%>"*/
-                                                                                            }}>
+                                                                                            <div className="hoverable" 
+                                                                                                style={{
+                                                                                                    backgroundColor: "#fffde7",marginBottom:5,cursor: "pointer",border: "1px solid #d3d3d3",borderRadius:2,padding:4,
+                                                                                                }}
+
+                                                                                                /*"onclick="javascript: "location.href=/special/library_paper_questions_display/<%=gradeName%>/<%=category%>/<%=paperID%>/<%=historyID%>"*/
+                                                                                                onClick={_ => navigate(`/library/special/${gradeName}/${category}/${paperID}/${historyID}/${_id}`)}
+                                                                                            >
 
                                                                                                 <div className="center">
 

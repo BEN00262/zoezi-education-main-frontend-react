@@ -1,14 +1,36 @@
 import React from "react";
+import Lottie from "lottie-react";
 import { Container } from "react-materialize";
 
-const GradeSelectCompSuspense = React.lazy(() => import("./components/GradeSelect"));
-const OnlineReportCompSuspense = React.lazy(() => import("./components/OnlineReport"));
+// animations
+import LoadingChartAnimation from './animations/loading_charts.json';
 
+const GradeSelectCompSuspense = React.lazy(() => import("./components/GradeSelect"));
+// const OnlineReportCompSuspense = React.lazy(() => import("./components/OnlineReport"));
+
+
+// add a lottie animation at this point as a transitional page
+const TransitionalPage = () => {
+    return (
+        <Container>
+            <div className="section">
+
+                <div /*className="valign-wrapper"*/>
+                    <Lottie 
+                        animationData={LoadingChartAnimation} 
+                        style={{
+                            height: "300px"
+                        }}
+                    />
+                </div>
+            </div>
+        </Container>
+    );
+}
 
 const ReportsPage = () => {
-
     return (
-        <React.Suspense fallback={<>loading reports...</>}>
+        <React.Suspense fallback={<TransitionalPage/>}>
             {/* {
                 is_online_printable_report ? <OnlineReportCompSuspense
                     {...{
